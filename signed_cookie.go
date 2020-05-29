@@ -14,23 +14,22 @@ import (
 	"time"
 )
 
-type Token struct {
-	Policy    string
+// AWS CloudFront Signed Cookie Token
+type SignedCookieToken struct {
+	// CloudFront flavored base64 string
+	Policy string
+	// CloudFront flavored base64 string
 	Signature string
 }
 
-type Param struct {
-	PrivateKey []byte
-	BaseURL    string
-	Expires    time.Time
-}
+type KeyPairPrivateKey []byte
 
-func Sign(param Param) (Token, error) {
-	var nullToken Token
+func (privateKey KeyPairPrivateKey) Sign(baseURL string, expires time.Time) (SignedCookieToken, error) {
+	var nullToken SignedCookieToken
 
-	policy := cloudfrontPolicy(param.BaseURL, param.Expires)
+	policy := cloudfrontPolicy(baseURL, expires)
 
-	block, _ := pem.Decode(param.PrivateKey)
+	block, _ := pem.Decode(privateKey)
 
 	key, err := x509.ParsePKCS1PrivateKey(block.Bytes)
 	if err != nil {
@@ -45,7 +44,7 @@ func Sign(param Param) (Token, error) {
 		return nullToken, err
 	}
 
-	return Token{
+	return SignedCookieToken{
 		Policy:    cloudfrontBase64(policy),
 		Signature: cloudfrontBase64(signed),
 	}, nil
