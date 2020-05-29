@@ -12,16 +12,17 @@ import (
 	"github.com/getto-systems/aws_cloudfront_token-go"
 )
 
-privateKey, err := ioutil.ReadFile("path/to/aws_cloudfront_key_pair/pk.pem")
+pem, err := ioutil.ReadFile("path/to/aws_cloudfront_key_pair/pk.pem")
 if err != nil {
 	log.Fatal(err)
 }
 
-token, err := aws_cloudfront_token.Sign(aws_cloudfront_token.Param{
-	PrivateKey: privateKey,
-	BaseURL: "https://AWS_CLOUDFRONT_BASE_URL",
-	Expires: time.Now().Add(time.Duration(30 * 1_000_000_000)), // expires 30 seconds after
-})
+privateKey := aws_cloudfront_token.KeyPairPrivateKey(pem)
+
+baseURL := "https://AWS_CLOUDFRONT_BASE_URL"
+expires: := time.Now().Add(time.Duration(30 * 1_000_000_000)), // expires 30 seconds after
+
+token, err := privateKey.Sign(baseURL, expires)
 if err != nil {
 	log.Fatal(err)
 }
