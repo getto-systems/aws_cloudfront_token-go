@@ -24,10 +24,10 @@ type SignedCookieToken struct {
 
 type KeyPairPrivateKey []byte
 
-func (privateKey KeyPairPrivateKey) Sign(baseURL string, expires time.Time) (SignedCookieToken, error) {
+func (privateKey KeyPairPrivateKey) Sign(resource string, expires time.Time) (SignedCookieToken, error) {
 	var nullToken SignedCookieToken
 
-	policy := cloudfrontPolicy(baseURL, expires)
+	policy := cloudfrontPolicy(resource, expires)
 
 	block, _ := pem.Decode(privateKey)
 
@@ -50,11 +50,11 @@ func (privateKey KeyPairPrivateKey) Sign(baseURL string, expires time.Time) (Sig
 	}, nil
 }
 
-func cloudfrontPolicy(baseURL string, expires time.Time) []byte {
+func cloudfrontPolicy(resource string, expires time.Time) []byte {
 	// AWS CloudFront flavored json : no extra spaces, strict formatted
 	return []byte(fmt.Sprintf(
 		"{\"Statement\":[{\"Resource\":\"%s\",\"Condition\":{\"DateLessThan\":{\"AWS:EpochTime\":%d}}}]}",
-		baseURL,
+		resource,
 		expires.Unix(),
 	))
 }
