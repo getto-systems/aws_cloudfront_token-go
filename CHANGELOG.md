@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Version : 1.2.0
+
+- refactor: empty token : See merge request getto-systems-base/labo/go/aws_cloudfront_token!13
+
+
 ## Version : 1.1.1
 
 - fix: readme : See merge request getto-systems-base/labo/go/aws_cloudfront_token!11
