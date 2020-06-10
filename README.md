@@ -8,6 +8,7 @@ status: production ready
 import (
 	"io/ioutil"
 	"log"
+	"time"
 
 	"github.com/getto-systems/aws_cloudfront_token-go"
 )
@@ -27,8 +28,8 @@ if err != nil {
 	log.Fatal(err)
 }
 
-// token.Policy:    aws cloudfront fravor base64 encoded string
-// token.Signature: aws cloudfront fravor base64 encoded string
+// token.Policy    // aws cloudfront fravor base64 encoded string
+// token.Signature // aws cloudfront fravor base64 encoded string
 ```
 
 
