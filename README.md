@@ -19,10 +19,10 @@ if err != nil {
 
 privateKey := aws_cloudfront_token.KeyPairPrivateKey(pem)
 
-baseURL := "https://AWS_CLOUDFRONT_BASE_URL"
+resource := "https://AWS_CLOUDFRONT_BASE_URL/*"
 expires: := time.Now().Add(time.Duration(30 * 1_000_000_000)), // expires 30 seconds after
 
-token, err := privateKey.Sign(baseURL, expires)
+token, err := privateKey.Sign(resource, expires)
 if err != nil {
 	log.Fatal(err)
 }
