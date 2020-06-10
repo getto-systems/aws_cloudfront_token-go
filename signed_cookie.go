@@ -25,15 +25,13 @@ type SignedCookieToken struct {
 type KeyPairPrivateKey []byte
 
 func (privateKey KeyPairPrivateKey) Sign(resource string, expires time.Time) (SignedCookieToken, error) {
-	var nullToken SignedCookieToken
-
 	policy := cloudfrontPolicy(resource, expires)
 
 	block, _ := pem.Decode(privateKey)
 
 	key, err := x509.ParsePKCS1PrivateKey(block.Bytes)
 	if err != nil {
-		return nullToken, err
+		return SignedCookieToken{}, err
 	}
 
 	rng := rand.Reader
@@ -41,7 +39,7 @@ func (privateKey KeyPairPrivateKey) Sign(resource string, expires time.Time) (Si
 	hashed := sha1.Sum(policy)
 	signed, err := rsa.SignPKCS1v15(rng, key, crypto.SHA1, hashed[:])
 	if err != nil {
-		return nullToken, err
+		return SignedCookieToken{}, err
 	}
 
 	return SignedCookieToken{
