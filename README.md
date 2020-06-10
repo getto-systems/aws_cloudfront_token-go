@@ -2,7 +2,7 @@
 
 golang: aws cloudfront token signer
 
-status: production ready
+status: production ready [GoDoc](https://pkg.go.dev/github.com/getto-systems/aws_cloudfront_token-go?tab=doc)
 
 ```golang
 import (
