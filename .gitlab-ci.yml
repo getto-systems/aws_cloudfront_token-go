@@ -7,9 +7,9 @@ stages:
   - release_notify
 
 variables:
-  TRELLIS_GIT_POST: https://trellis.getto.systems/git/post/1.0.0
-  TRELLIS_CI_BUMP_VERSION: https://trellis.getto.systems/ci/bump-version/1.7.0
-  TRELLIS_PSYCHER_GETTO: https://trellis.getto.systems/psycher/getto/2.6.0
+  TRELLIS_GIT_POST: https://trellis.getto.systems/git/post/1.5.2
+  TRELLIS_CI_BUMP_VERSION: https://trellis.getto.systems/ci/bump-version/1.10.2
+  TRELLIS_PSYCHER_GETTO: https://trellis.getto.systems/psycher/getto/2.7.2
 
 test:
   stage: test
@@ -45,7 +45,7 @@ release:
   stage: release
   only:
     refs:
-      - master@getto-systems-base/labo/go/aws_cloudfront_token
+      - release@getto-systems-base/labo/go/aws_cloudfront_token
     changes:
       - .release-version
   except:
@@ -61,7 +61,7 @@ release_success:
   stage: release_notify
   only:
     refs:
-      - master@getto-systems-base/labo/go/aws_cloudfront_token
+      - release@getto-systems-base/labo/go/aws_cloudfront_token
     changes:
       - .release-version
   except:
@@ -83,7 +83,7 @@ release_failure:
   stage: release_notify
   only:
     refs:
-      - master@getto-systems-base/labo/go/aws_cloudfront_token
+      - release@getto-systems-base/labo/go/aws_cloudfront_token
     changes:
       - .release-version
   except:
